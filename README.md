@@ -58,7 +58,7 @@ Legal-Chat uses Gemini API for processing legal queries.
 ## 🌟 Future Enhancements
 🔹 **Multilingual Support** – Provide legal assistance in multiple languages.
 
-🔹 ***Voice Assistant** – Enable users to ask legal questions using voice commands.
+🔹 **Voice Assistant** – Enable users to ask legal questions using voice commands.
 
 🔹 **User Authentication** – Allow users to save their legal queries and responses.
 
