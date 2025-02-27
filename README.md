@@ -44,9 +44,9 @@ Legal-Chat is an AI-powered chatbot designed to provide clear and accessible leg
 ---
 
 ## 📸 Screenshots
-Home Page	Chat Interface
-Home Page	Chat Interface
-(Replace link-to-homepage-screenshot and link-to-chat-screenshot with actual image links from your repo.)
+![Hompage](https://raw.githubusercontent.com/michael-0007a/Legal-Chat/main/Legal%20Chat/assets/images/Screenshot%20(212).png)
+![ChatBoy Section](https://raw.githubusercontent.com/michael-0007a/Legal-Chat/main/Legal%20Chat/assets/images/Screenshot%20(213).png)
+
 
 ---
 
