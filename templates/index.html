@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/icon.png" type="image/"/>  
+    <title>LegalChat</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Desktop Required Message -->
+    <div class="desktop-required-message">
+        <p>Please access this application on a desktop or a device with a screen width of at least 1040px for the best experience.</p>
+    </div>
+
+    <!-- Navigation Section -->
+    <header>
+        <div class="brand-name">LegalChat</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Background Video -->
+    <section id="home" class="hero">
+        <video autoplay muted loop id="background-video">
+            <source src="/static/video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>Legal Assistant</h1>
+            <h3>Get instant answers to your Indian legal queries with our advanced AI assistant.</h3>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="service-cards">
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fas fa-balance-scale fa-3x"></i>
+                        <h3>Legal Consultation</h3>
+                        <p>Get expert legal guidance at your fingertips, 24/7.</p>
+                    </div>
+                    <div class="card-back">
+                <h3>Legal Advice</h3>
+                        <p>Chat with our AI legal expert about Indian law, rights, and procedures.</p>
+                        <button class="action-btn" onclick="showLegalAdvice()">Start Chat</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fas fa-file-contract fa-3x"></i>
+                        <h3>Document Analysis</h3>
+                        <p>Understanding legal documents made simple.</p>
+                    </div>
+                    <div class="card-back">
+                <h3>Document Review</h3>
+                        <p>Upload your legal documents for AI-powered analysis and understanding.</p>
+                        <button class="action-btn" onclick="showDocReview()">Upload Document</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fas fa-gavel fa-3x"></i>
+                        <h3>Court History</h3>
+                        <p>Discover landmark judgments that shaped Indian law.</p>
+                    </div>
+                    <div class="card-back">
+                        <h3>Case Explorer</h3>
+                        <p>Explore historic court cases, their rulings, and lasting impact on Indian judiciary.</p>
+                        <button class="action-btn" onclick="showCourtCases()">Explore Cases</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Sections Container -->
+    <section id="chat" class="chat-sections">
+        <!-- Legal Advice Chatbot -->
+        <div id="legal-advice" class="chat-section active">
+        <div class="chat-container">
+                <h2>Legal Assistant</h2>
+            <div id="chat-box" class="chat-box">
+                    <p><strong>Assistant:</strong> 👋 Welcome! I'm your Indian legal assistant. How can I help you today?</p>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="user-input" class="chat-input" placeholder="Ask your legal question..." onkeypress="handleKeyPress(event)">
+                    <button onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Document Review Section -->
+        <div id="doc-review" class="chat-section">
+            <div class="chat-container">
+                <h2>Document Review</h2>
+                <div class="upload-section">
+                    <div class="upload-box" id="upload-box">
+                        <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                        <h3>Upload Legal Document</h3>
+                        <p>Drag & drop your PDF here or click to browse</p>
+                        <input type="file" id="file-input" accept=".pdf" hidden>
+                    </div>
+                </div>
+                <div id="summary-box" class="summary-section" style="display: none;">
+                    <h3>Document Summary</h3>
+                    <div class="summary-content"></div>
+                    <div id="doc-chat-box" class="chat-box">
+                        <p><strong>Assistant:</strong> I've analyzed your document. What would you like to know about it?</p>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" id="doc-user-input" class="chat-input" placeholder="Ask about the document..." onkeypress="handleDocKeyPress(event)">
+                        <button onclick="sendDocMessage()">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Court Cases Section -->
+        <div id="court-cases" class="chat-section">
+            <div class="chat-container">
+                <h2>Court Case Explorer</h2>
+                <div id="case-chat-box" class="chat-box">
+                    <p><strong>Assistant:</strong> Welcome to the Indian Court Cases Explorer! Please tell me which case you'd like to learn about. I can provide information about landmark cases and their rulings.</p>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="case-user-input" class="chat-input" placeholder="Enter the case name or description..." onkeypress="handleCaseKeyPress(event)">
+                    <button onclick="sendCaseMessage()">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What types of legal cases does LegalChat handle?</h3>
+                    <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>LegalChat specializes in Indian law and can assist with various legal matters including:</p>
+                    <ul>
+                        <li>Constitutional law queries</li>
+                        <li>Criminal law cases and procedures</li>
+                        <li>Civil law matters</li>
+                        <li>Family law concerns</li>
+                        <li>Property law questions</li>
+                        <li>Corporate law inquiries</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How accurate is the legal information provided?</h3>
+                    <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>LegalChat provides information based on Indian law and precedents. While we strive for accuracy, please note:</p>
+                    <ul>
+                        <li>All information is for general guidance only</li>
+                        <li>Consult a qualified lawyer for specific legal advice</li>
+                        <li>Laws and regulations may change over time</li>
+                        <li>Each case's circumstances are unique</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How does the document analysis feature work?</h3>
+                    <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our document analysis system works in several steps:</p>
+                    <ul>
+                        <li>Upload your legal document in PDF format</li>
+                        <li>AI processes and extracts key information</li>
+                        <li>System provides a comprehensive summary</li>
+                        <li>Ask specific questions about the document</li>
+                        <li>Get relevant insights and explanations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Can I learn about specific court cases?</h3>
+                    <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, our Court Case Explorer feature allows you to:</p>
+                    <ul>
+                        <li>Learn about landmark Indian court cases</li>
+                        <li>Understand case backgrounds and rulings</li>
+                        <li>Explore the impact of significant judgments</li>
+                        <li>Access case summaries and analyses</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What makes LegalChat different from other legal resources?</h3>
+                    <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>LegalChat stands out with several unique features:</p>
+                    <ul>
+                        <li>24/7 instant access to legal information</li>
+                        <li>AI-powered analysis of complex legal documents</li>
+                        <li>Comprehensive database of Indian court cases</li>
+                        <li>User-friendly interface for all legal queries</li>
+                        <li>Regular updates with latest legal developments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How secure is my information when using LegalChat?</h3>
+                    <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>We take data security very seriously:</p>
+                    <ul>
+                        <li>All communications are encrypted end-to-end</li>
+                        <li>Document uploads are processed securely</li>
+                        <li>No personal information is stored permanently</li>
+                        <li>Compliance with data protection regulations</li>
+                        <li>Regular security audits and updates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer Section -->
+<footer>
+        <div class="footer-waves">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="rgba(99, 102, 241, 0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-brand-section">
+                    <div class="footer-brand">LegalChat</div>
+                    <p>Empowering citizens with accessible legal knowledge through AI.</p>
+            <div class="social-icons">
+                        <a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://github.com" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#faq">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#services" data-service="legal-advice">Legal Consultation</a></li>
+                            <li><a href="#services" data-service="doc-review">Document Analysis</a></li>
+                            <li><a href="#services" data-service="court-cases">Case Explorer</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Contact Us</h3>
+                        <div class="contact-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Anurag University,<br>Venkatapur, Ghatkesar Rd,<br>Hyderabad, Telangana 500088</p>
+                            <p><i class="fas fa-envelope"></i> michaelBenedict0007b@gmail.com</p>
+                            <p><i class="fas fa-phone"></i> +91 7207420835</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LegalChat. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    
+                </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // Smooth scrolling for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const section = document.querySelector(this.getAttribute('href'));
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const sectionTop = section.offsetTop - headerHeight;
+
+                // If this is a service link in the footer
+                if (this.hasAttribute('data-service')) {
+                    const serviceType = this.getAttribute('data-service');
+                    window.scrollTo({
+                        top: sectionTop,
+                        behavior: 'smooth'
+                    });
+                    // After scrolling, show the appropriate service chat
+                    setTimeout(() => {
+                        switch(serviceType) {
+                            case 'legal-advice':
+                                showLegalAdvice();
+                                break;
+                            case 'doc-review':
+                                showDocReview();
+                                break;
+                            case 'court-cases':
+                                showCourtCases();
+                                break;
+                        }
+                    }, 1000); // Wait for scroll to complete
+                } else {
+                    window.scrollTo({
+                        top: sectionTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initially hide chat sections
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatSections = document.querySelector('.chat-sections');
+            chatSections.style.display = 'none';
+        });
+
+        // Switch between chat sections with animation
+        function showLegalAdvice() {
+            const chatSectionsContainer = document.querySelector('.chat-sections');
+            const allChatSections = chatSectionsContainer.querySelectorAll('.chat-section');
+
+            // Hide all chat sections
+            allChatSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show the chat sections container if it's hidden
+            chatSectionsContainer.style.display = 'block';
+
+            setTimeout(() => {
+                chatSectionsContainer.classList.add('visible');
+                // Show the selected chat section
+                document.getElementById('legal-advice').classList.add('active');
+                // Scroll to chat section
+                chatSectionsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        }
+
+        function showDocReview() {
+            const chatSectionsContainer = document.querySelector('.chat-sections');
+            const allChatSections = chatSectionsContainer.querySelectorAll('.chat-section');
+
+            // Hide all chat sections
+            allChatSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show the chat sections container if it's hidden
+            chatSectionsContainer.style.display = 'block';
+
+            setTimeout(() => {
+                chatSectionsContainer.classList.add('visible');
+                 // Show the selected chat section
+                document.getElementById('doc-review').classList.add('active');
+                // Scroll to chat section
+                chatSectionsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        }
+
+        function showCourtCases() {
+            const chatSectionsContainer = document.querySelector('.chat-sections');
+            const allChatSections = chatSectionsContainer.querySelectorAll('.chat-section');
+
+            // Hide all chat sections
+            allChatSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+             // Show the chat sections container if it's hidden
+            chatSectionsContainer.style.display = 'block';
+
+            setTimeout(() => {
+                chatSectionsContainer.classList.add('visible');
+                 // Show the selected chat section
+                document.getElementById('court-cases').classList.add('active');
+                // Scroll to chat section
+                chatSectionsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        }
+
+        // File upload handling
+        const uploadBox = document.getElementById('upload-box');
+        const fileInput = document.getElementById('file-input');
+        const summaryBox = document.getElementById('summary-box');
+
+        uploadBox.addEventListener('click', () => fileInput.click());
+        uploadBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadBox.classList.add('dragover');
+        });
+        uploadBox.addEventListener('dragleave', () => {
+            uploadBox.classList.remove('dragover');
+        });
+        uploadBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadBox.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/pdf') {
+                handleFileUpload(file);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handleFileUpload(file);
+            }
+        });
+
+        async function handleFileUpload(file) {
+            // Show loading state
+            uploadBox.innerHTML = '<i class="fas fa-spinner fa-spin fa-3x"></i><h3>Processing...</h3>';
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    uploadBox.innerHTML = `
+                        <i class="fas fa-exclamation-circle fa-3x" style="color: #ff4444;"></i>
+                        <h3>Error</h3>
+                        <p>${data.error}</p>
+                        <p>Click to try again</p>
+                    `;
+                } else {
+                    uploadBox.style.display = 'none';
+                    summaryBox.style.display = 'block';
+                    document.querySelector('.summary-content').innerHTML = data.summary;
+                }
+            } catch (error) {
+                uploadBox.innerHTML = `
+                    <i class="fas fa-exclamation-circle fa-3x" style="color: #ff4444;"></i>
+                    <h3>Error</h3>
+                    <p>Failed to process document. Please try again.</p>
+                    <p>Click to retry</p>
+                `;
+            }
+        }
+
+        // Chat functionality
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function handleDocKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendDocMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+            
+            if (!message) return;
+
+            const chatBox = document.getElementById('chat-box');
+            
+            // Add user message
+            chatBox.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+            userInput.value = '';
+            
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    chatBox.innerHTML += `<p><strong>Assistant:</strong> ❌ ${data.error}</p>`;
+                } else {
+                    chatBox.innerHTML += `<p><strong>Assistant:</strong> ${data.response}</p>`;
+                }
+            } catch (error) {
+                chatBox.innerHTML += `<p><strong>Assistant:</strong> ❌ Sorry, there was an error processing your request. Please try again.</p>`;
+            }
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+            userInput.focus();
+        }
+
+        async function sendDocMessage() {
+            const userInput = document.getElementById('doc-user-input');
+            const message = userInput.value.trim();
+            
+            if (!message) return;
+
+            const chatBox = document.getElementById('doc-chat-box');
+            
+            chatBox.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+            userInput.value = '';
+            
+            try {
+                const response = await fetch('/doc-chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    chatBox.innerHTML += `<p><strong>Assistant:</strong> ❌ ${data.error}</p>`;
+                } else {
+                    chatBox.innerHTML += `<p><strong>Assistant:</strong> ${data.response}</p>`;
+                }
+            } catch (error) {
+                chatBox.innerHTML += `<p><strong>Assistant:</strong> ❌ Sorry, there was an error processing your request. Please try again.</p>`;
+            }
+            
+            chatBox.scrollTop = chatBox.scrollHeight;
+            userInput.focus();
+        }
+
+        function handleCaseKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendCaseMessage();
+            }
+        }
+
+        async function sendCaseMessage() {
+            const userInput = document.getElementById('case-user-input');
+            const message = userInput.value.trim();
+            
+            if (!message) return;
+
+            const chatBox = document.getElementById('case-chat-box');
+            
+            // Add user message
+            chatBox.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+            userInput.value = '';
+            
+            try {
+                const response = await fetch('/case-chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    chatBox.innerHTML += `<p><strong>Assistant:</strong> ❌ ${data.error}</p>`;
+                } else {
+                    chatBox.innerHTML += `<p><strong>Assistant:</strong> ${data.response}</p>`;
+                }
+            } catch (error) {
+                chatBox.innerHTML += `<p><strong>Assistant:</strong> ❌ Sorry, there was an error processing your request. Please try again.</p>`;
+            }
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+            userInput.focus();
+        }
+
+        // Add this to your existing script section
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ Toggle functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('.faq-toggle i');
+                
+                question.addEventListener('click', () => {
+                    // Close other open FAQs
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                            otherItem.querySelector('.faq-toggle i').classList.remove('fa-chevron-up');
+                            otherItem.querySelector('.faq-toggle i').classList.add('fa-chevron-down');
+                        }
+                    });
+                    
+                    // Toggle current FAQ
+                    item.classList.toggle('active');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                    
+                    if (item.classList.contains('active')) {
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                    } else {
+                        answer.style.maxHeight = null;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
